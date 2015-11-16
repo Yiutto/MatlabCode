@@ -1,0 +1,52 @@
+另外英文单词中，如果“-”和“'”不出现在首尾，应该算是英文单词的一部分，这个要看需求了
+Regex reg = new Regex(@"(?i)\b(?!-)[a-z'-]+(?<!-)\b");
+MatchCollection mc = reg.Matches(yourStr);
+foreach (Match m in mc)
+{
+    richTextBox2.Text += m.Value + "\n";
+}
+
+哦，漏了“'”的判断
+Regex reg = new Regex(@"(?i)\b(?!['-])[a-z'-]+(?<!['-])\b");
+MatchCollection mc = reg.Matches(yourStr);
+foreach (Match m in mc)
+{
+    richTextBox2.Text += m.Value + "\n";
+}
+
+
+fid=fopen('NIPS2014-5632.txt');
+text=fscanf(fid,'%c');
+
+A=regexpi(text,@"(?i)\b(?!['-])[a-z'-]+(?<!['-])\b",'match');
+
+
+library("tm")
+txt<-system.file("texts","txt1",package="tm")#读取tm包里面text\txt下的文档
+nips<-Corpus(DirSource(txt),readerControl=list(language="utf-8"))
+dtm <- DocumentTermMatrix(nips)
+
+
+library("tm")
+library("SnowballC")
+reut<-system.file("texts","crude",package='tm')
+reuters <- Corpus(DirSource(reut), readerControl = list(reader = readReut21578XML))
+reuters <- tm_map(reuters, PlainTextDocument)#去除标签
+reuters <- tm_map(reuters, stripWhitespace)#去多余空白
+reuters <- tm_map(reuters, content_transformer(tolower))#转换小写
+reuters <- tm_map(reuters, removeWords, stopwords("english"))
+tm_map(reuters, stemDocument)
+
+
+
+[c1 c2 c3]=textread('NameTitleAuthors.txt','%s %s %s','delimiter',';');
+StrArray=struct('Name',c1,'Title',c2,'Author',c3);
+[seednew,index] = sort([StrArray.Name]);
+
+[Name Title Author]=textread('NameTitleAuthors.txt','%s %s %s','delimiter',';');
+tblA=table(Title,Authors,'RowNames',Name);
+[Texttable,index]=sortrows(tblA,'RowNames');
+
+
+c4=textread('Author.txt','%s','delimiter','\n');
+Authors=textread('AuthorASCI.txt','%s','delimiter','\n');

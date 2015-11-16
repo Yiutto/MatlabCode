@@ -1,0 +1,20 @@
+%如何保存文件名，docs_names
+A=textread('AllTextNames.txt','%s');
+docs_names=A';
+%如何将docs_names和后缀名合并
+fname=strcat(docs_names,'.txt');
+%方法1：批处理提取txt文档的words
+A=[];
+for i=1:length(fname)
+    text=[];
+    fid=fopen(fname{i});
+    text=fscanf(fid,'%c');
+    A=[A,text];
+    fclose(fid); 
+end
+str='[a-zA-Z]+';
+word=regexpi(A,str,'match');
+%去除重复元素
+words=unique(word);
+%排序元素并计算元素的频率
+frequency=tabulate(sort(word)); 
